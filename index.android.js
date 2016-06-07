@@ -4,52 +4,59 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Image
+	AppRegistry,
+	StyleSheet,
+	Navigator,
+	Text,
+	View,
+	Image,
+	BackAndroid
 } from 'react-native';
-import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+import Dashboard from './App/Views/Dashboard/index.android';
+
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+	if (!this.onMainScreen()) {
+		this.goBack();
+		return true;
+	}
+	_navigator.pop();
+	return true;
+});
 
 
 class AwesomeProject extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      'product' : {}
-    };
-  }
-  componentWillMount(){
-    this.fetchData();
-  }
-  fetchData(){
-    fetch('http://www.stylewe.com/rest/product/716')
-      .then((response) => response.json())
-      .then((dt) => {
-        this.setState({'product' : dt})
-      }).done();
-  }
-  render() {
-    return (<View style={styles.container}>
-      <ScrollableTabView initialPage={0} renderTabBar={() => <ScrollableTabBar />}>
-        <Text tabLabel='Tab #1'>My</Text>
-        <Text tabLabel='Tab #2'>favorite</Text>
-        <Text tabLabel='Tab #3'>project</Text>
-        <Text tabLabel='Tab #4'>favorite</Text>
-        <Text tabLabel='Tab #5'>project</Text>
-      </ScrollableTabView>
-    </View>)
-  }
+	constructor(props) {
+		super(props);
+	}
+
+	componentWillMount() {
+
+	}
+	navigatorRenderScene (route, navigator) {
+		_navigator = navigator;
+		switch (route.id) {
+			case 'Dashboard':
+				return (<Dashboard navigator={navigator} />);
+				break;
+		}
+	}
+	render() {
+		return (
+			<Navigator
+				style={styles.container}
+				tintColor='#FF6600'
+				initialRoute={{id: 'Dashboard'}}
+				renderScene={this.navigatorRenderScene}/>
+		);
+	}
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 30,
-  },
+	container: {
+		flex: 1,
+		marginTop: 30,
+	}
 });
-
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);

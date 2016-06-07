@@ -1,14 +1,14 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {Component,PropTypes} from 'react';
+import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   Animated,
   StatusBar,
-} = React;
+} from 'react-native';
 
 var Icon = require('react-native-vector-icons/FontAwesome');
 
@@ -45,81 +45,76 @@ var styles = StyleSheet.create({
   }
 });
 
-var CustomTabBar = React.createClass({
-  selectedTabIcons: [],
-  unselectedTabIcons: [],
+export default class CustomTabBar extends Component {
+	renderTabOption(valsString, page) {
+		var vals = valsString.split('!$#');
+		var isTabActive = this.props.activeTab === page;
+		return (
+			<TouchableOpacity key={valsString} onPress={() => this.props.goToPage(page)} style={styles.tab}>
+				<Icon name={vals[1]}
+				      size={parseInt(vals[2])}
+				      color={'gray'} />
+				<Text style={styles.labelText}>
+					{vals[0]}
+				</Text>
+			</TouchableOpacity>
+		);
+	}
+	componentDidMount() {
+		this.setAnimationValue({value: this.props.activeTab});
+		this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
+	}
+	setAnimationValue({value}) {
+		var currentPage = this.props.activeTab;
 
-  propTypes: {
-    goToPage: React.PropTypes.func,
-    activeTab: React.PropTypes.number,
-    tabs: React.PropTypes.array
-  },
+		this.unselectedTabIcons.forEach((icon, i) => {
+			var iconRef = icon;
 
-  renderTabOption(valsString, page) {
-    var vals = valsString.split('!$#');
-    var isTabActive = this.props.activeTab === page;
-    return (
-      <TouchableOpacity key={valsString} onPress={() => this.props.goToPage(page)} style={styles.tab}>
-        <Icon name={vals[1]} 
-              size={parseInt(vals[2])}
-              color={'gray'} />
-        <Text style={styles.labelText}>
-          {vals[0]}
-        </Text>
-      </TouchableOpacity>
-    );
-  },
+			if (!icon.setNativeProps && icon !== null) {
+				iconRef = icon.refs.icon_image
+			}
 
-  componentDidMount() {
-    this.setAnimationValue({value: this.props.activeTab});
-    this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
-  },
+			if (value - i >= 0 && value - i <= 1) {
+				iconRef.setNativeProps({opacity: value - i});
+			}
+			if (i - value >= 0 &&  i - value <= 1) {
+				iconRef.setNativeProps({opacity: i - value});
+			}
+		});
+	}
+	render() {
+		var containerWidth = this.props.containerWidth;
+		var numberOfTabs = this.props.tabs.length;
+		var tabUnderlineStyle = {
+			position: 'absolute',
+			width: containerWidth / numberOfTabs,
+			height: 3,
+			backgroundColor: '#FF6600',
+			bottom: 0,
+		};
 
-  setAnimationValue({value}) {
-    var currentPage = this.props.activeTab;
+		var left = this.props.scrollValue.interpolate({
+			inputRange: [0, 1], outputRange: [0, containerWidth / numberOfTabs]
+		});
 
-    this.unselectedTabIcons.forEach((icon, i) => {
-      var iconRef = icon;
+		return (
+			<View>
+				<StatusBar backgroundColor={'#d25500'} />
+				<View style={styles.separator}/>
+				<View style={styles.tabs}>
+					{this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
+				</View>
+				<Animated.View style={[tabUnderlineStyle, {left}]} />
+			</View>
+		);
+	}
 
-      if (!icon.setNativeProps && icon !== null) {
-        iconRef = icon.refs.icon_image
-      }
+}
+CustomTabBar.propTypes = {
+	goToPage: React.PropTypes.func,
+	activeTab: React.PropTypes.number,
+	tabs: React.PropTypes.array
+}
+CustomTabBar.selectedTabIcons = [];
+CustomTabBar.unselectedTabIcons = [];
 
-      if (value - i >= 0 && value - i <= 1) {
-        iconRef.setNativeProps({opacity: value - i});
-      }
-      if (i - value >= 0 &&  i - value <= 1) {
-        iconRef.setNativeProps({opacity: i - value});
-      }
-    });
-  },
-
-  render() {
-    var containerWidth = this.props.containerWidth;
-    var numberOfTabs = this.props.tabs.length;
-    var tabUnderlineStyle = {
-      position: 'absolute',
-      width: containerWidth / numberOfTabs,
-      height: 3,
-      backgroundColor: '#FF6600',
-      bottom: 0,
-    };
-
-    var left = this.props.scrollValue.interpolate({
-      inputRange: [0, 1], outputRange: [0, containerWidth / numberOfTabs]
-    });
-
-    return (
-      <View>
-        <StatusBar backgroundColor={'#d25500'} />
-        <View style={styles.separator}/>
-        <View style={styles.tabs}>
-          {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
-        </View>
-        <Animated.View style={[tabUnderlineStyle, {left}]} />
-      </View>
-    );
-  },
-});
-
-module.exports = CustomTabBar;

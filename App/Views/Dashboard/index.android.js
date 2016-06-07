@@ -1,32 +1,30 @@
 'use strict';
 
-var React = require('react-native');
+import React, {Component,PropTypes} from 'react';
 
-var {
+import {
   StyleSheet,
   Text,
   View,
   TouchableHighlight
-} = React;
+} from 'react-native';
 
-var ToolbarAndroid = require('ToolbarAndroid');
+import ToolbarAndroid from 'ToolbarAndroid';
+import TabBar from '../../Components/TabBar';
+import api from '../../Network/api.js'
+import RefreshableListView from '../../Components/RefreshableListView'
 
-var TabBar = require("../../Components/TabBar");
-
-var api = require("../../Network/api.js");
-
-var RefreshableListView = require("../../Components/RefreshableListView");
-
-module.exports = React.createClass({
-  getInitialState: function(){
-    return {
-        topStoryIDs: null,
-        lastIndex: 0
-    };
-  },
-  render: function(){
-    return(
-      <TabBar structure={[{
+export default class Dashboard extends Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			topStoryIDs: null,
+			lastIndex: 0
+		}
+	}
+	render () {
+		return(
+			<TabBar structure={[{
                             title: 'Ask HN',
                             iconName: 'comment',
                             renderContent: () => {return(
@@ -96,77 +94,78 @@ module.exports = React.createClass({
                                 </View>
                               );}
                           },]}
-              selectedTab={2}
-              activeTintColor={'#ff8533'}
-              iconSize={20}/>
-    );
-  },
-  renderListViewRow: function(row, pushNavBarTitle){
-      return(
-          <TouchableHighlight underlayColor={'#f3f3f2'}
-                              onPress={()=>this.selectRow(row, pushNavBarTitle)}>
-            <View style={styles.rowContainer}>
-                <Text style={styles.rowCount}>
-                    {row.count}
-                </Text>
-                <View style={styles.rowDetailsContainer}>
-                    <Text style={styles.rowTitle}>
-                        {row.title}
-                    </Text>
-                    <Text style={styles.rowDetailsLine}>
-                        Posted by {row.by} | {row.score} Points | {row.descendants} Comments
-                    </Text>
-                    <View style={styles.separator}/>
-                </View>
-            </View>
-          </TouchableHighlight>
-      );
-  },
-  listViewOnRefresh: function(page, callback, api_endpoint){
-      if (page != 1 && this.state.topStoryIDs){
-          this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
-      }
-      else {
-        fetch(api_endpoint)
-        .then((response) => response.json())
-        .then((topStoryIDs) => {
-            this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
-            this.setState({topStoryIDs: topStoryIDs});
-        })
-        .done();
-      }
-  },
-  fetchStoriesUsingTopStoryIDs: function(topStoryIDs, startIndex, amountToAdd, callback){
-      var rowsData = [];
-      var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
-      function iterateAndFetch(){
-          if (startIndex < endIndex){
-              fetch(api.HN_ITEM_ENDPOINT+topStoryIDs[startIndex]+".json")
-              .then((response) => response.json())
-              .then((topStory) => {
-                  topStory.count = startIndex+1;
-                  rowsData.push(topStory);
-                  startIndex++;
-                  iterateAndFetch();
-              })
-              .done();
-          }
-          else {
-              callback(rowsData);
-              return;
-          }
-      }
-      iterateAndFetch();
-      this.setState({lastIndex: endIndex});
-  },
-  selectRow: function(row, pushNavBarTitle){
-    this.props.navigator.push({
-      id: 'Post',
-      title: pushNavBarTitle+' #'+row.count,
-      post: row,
-    });
-  }
-});
+			        selectedTab={2}
+			        activeTintColor={'#ff8533'}
+			        iconSize={20}/>
+		);
+	}
+	renderListViewRow (row, pushNavBarTitle){
+		return(
+			<TouchableHighlight underlayColor={'#f3f3f2'}
+			                    onPress={()=>this.selectRow(row, pushNavBarTitle)}>
+				<View style={styles.rowContainer}>
+					<Text style={styles.rowCount}>
+						{row.count}
+					</Text>
+					<View style={styles.rowDetailsContainer}>
+						<Text style={styles.rowTitle}>
+							{row.title}
+						</Text>
+						<Text style={styles.rowDetailsLine}>
+							Posted by {row.by} | {row.score} Points | {row.descendants} Comments
+						</Text>
+						<View style={styles.separator}/>
+					</View>
+				</View>
+			</TouchableHighlight>
+		);
+	}
+	listViewOnRefresh (page, callback, api_endpoint){
+		if (page != 1 && this.state.topStoryIDs){
+			this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
+		}
+		else {
+			fetch(api_endpoint)
+				.then((response) => response.json())
+				.then((topStoryIDs) => {
+					this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
+					this.setState({topStoryIDs: topStoryIDs});
+				})
+				.done();
+		}
+	}
+	fetchStoriesUsingTopStoryIDs (topStoryIDs, startIndex, amountToAdd, callback){
+		var rowsData = [];
+		var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
+		function iterateAndFetch(){
+			if (startIndex < endIndex){
+				fetch(api.HN_ITEM_ENDPOINT+topStoryIDs[startIndex]+".json")
+					.then((response) => response.json())
+					.then((topStory) => {
+						topStory.count = startIndex+1;
+						rowsData.push(topStory);
+						startIndex++;
+						iterateAndFetch();
+					})
+					.done();
+			}
+			else {
+				callback(rowsData);
+				return;
+			}
+		}
+		iterateAndFetch();
+		this.setState({lastIndex: endIndex});
+	}
+	selectRow (row, pushNavBarTitle){
+		this.props.navigator.push({
+			id: 'Post',
+			title: pushNavBarTitle+' #'+row.count,
+			post: row,
+		});
+	}
+}
+
 
 var styles = StyleSheet.create({
     container: {
