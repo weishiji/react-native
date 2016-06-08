@@ -29,9 +29,6 @@ export default class Dashboard extends Component{
                             iconName: 'comment',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
-                                  <ToolbarAndroid style={styles.toolbar}
-                                                  title={'Ask HN'}
-                                                  titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Ask Story')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
                                                        backgroundColor={'#F6F6EF'}/>
@@ -99,7 +96,7 @@ export default class Dashboard extends Component{
 			        iconSize={20}/>
 		);
 	}
-	renderListViewRow (row, pushNavBarTitle){
+	renderListViewRow = (row, pushNavBarTitle) => {
 		return(
 			<TouchableHighlight underlayColor={'#f3f3f2'}
 			                    onPress={()=>this.selectRow(row, pushNavBarTitle)}>
@@ -128,6 +125,7 @@ export default class Dashboard extends Component{
 			fetch(api_endpoint)
 				.then((response) => response.json())
 				.then((topStoryIDs) => {
+
 					this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
 					this.setState({topStoryIDs: topStoryIDs});
 				})
@@ -157,7 +155,7 @@ export default class Dashboard extends Component{
 		iterateAndFetch();
 		this.setState({lastIndex: endIndex});
 	}
-	selectRow (row, pushNavBarTitle){
+	selectRow = (row, pushNavBarTitle) => {
 		this.props.navigator.push({
 			id: 'Post',
 			title: pushNavBarTitle+' #'+row.count,

@@ -46,7 +46,12 @@ var styles = StyleSheet.create({
 });
 
 export default class CustomTabBar extends Component {
-	renderTabOption(valsString, page) {
+	constructor(props) {
+		super(props);
+		this.selectedTabIcons = [];
+		this.unselectedTabIcons = [];
+	}
+	renderTabOption = (valsString, page) => {
 		var vals = valsString.split('!$#');
 		var isTabActive = this.props.activeTab === page;
 		return (
@@ -64,7 +69,7 @@ export default class CustomTabBar extends Component {
 		this.setAnimationValue({value: this.props.activeTab});
 		this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
 	}
-	setAnimationValue({value}) {
+	setAnimationValue = ({value}) =>{
 		var currentPage = this.props.activeTab;
 
 		this.unselectedTabIcons.forEach((icon, i) => {
@@ -115,6 +120,4 @@ CustomTabBar.propTypes = {
 	activeTab: React.PropTypes.number,
 	tabs: React.PropTypes.array
 }
-CustomTabBar.selectedTabIcons = [];
-CustomTabBar.unselectedTabIcons = [];
 
