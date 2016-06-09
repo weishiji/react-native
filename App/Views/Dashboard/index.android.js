@@ -40,12 +40,12 @@ export default class Dashboard extends Component{
                               );}
                           },
                           {
-                            title: 'Show HN',
+                            title: 'Discovery',
                             iconName: 'eye',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
                                   <ToolbarAndroid style={styles.toolbar}
-                                                  title={'Show HN'}
+                                                  title={'Discovery'}
                                                   titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
@@ -54,12 +54,12 @@ export default class Dashboard extends Component{
                               );}
                           },
                           {
-                            title: 'Front Page',
+                            title: 'Category',
                             iconName: 'star',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
                                   <ToolbarAndroid style={styles.toolbar}
-                                                  title={'Top Stories'}
+                                                  title={'Category'}
                                                   titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT)}

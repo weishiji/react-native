@@ -28,11 +28,11 @@ export default class RefreshableListView extends Component {
 			renderHeader: props.renderHeader ? props.renderHeader : null,
 		}
 	}
-	handleRawData (dataArr) {
-		var rows = {};
-		for(var i=0;i<dataArr.length;i+=1){
-			var temp = dataArr[i];
-			rows[temp.product_id] = temp;
+	handleRawData (response) {
+		var rows = [];
+		for(let i=0;i<response['data'].length;i+=1){
+			let temp = response['data'][i];
+			rows[temp.product_id] = [temp];
 		}
 		return rows;
 	}
@@ -40,11 +40,7 @@ export default class RefreshableListView extends Component {
 		var api_point = 'http://www.stylewe.com/rest/product'
 		axios.get(api_point)
 			.then((response) => {
-				var rows = [];
-				for(let i=0;i<response['data'].length;i+=1){
-					let temp = response['data'][i];
-					rows[temp.product_id] = [temp];
-				}
+				var rows = this.handleRawData(response);
 				callback(rows);
 			});
 	}
@@ -182,7 +178,7 @@ export default class RefreshableListView extends Component {
 				<GiftedListView
 					rowView={this._renderRowView}
 
-					onFetch={this._onFetch}
+					onFetch={this._onFetch.bind(this)}
 					initialListSize={12} // the maximum number of rows displayable without scrolling (height of the listview / height of row)
 
 					firstLoader={true} // display a loader for the first fetching
