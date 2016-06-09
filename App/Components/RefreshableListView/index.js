@@ -37,7 +37,8 @@ export default class RefreshableListView extends Component {
 		return rows;
 	}
 	_onFetch  (page = 1, callback, options) {
-		var api_point = 'http://www.stylewe.com/rest/product'
+		var api_point = 'http://www.stylewe.com/rest/product';
+		
 		axios.get(api_point)
 			.then((response) => {
 				var rows = this.handleRawData(response);

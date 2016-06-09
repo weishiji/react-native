@@ -82,12 +82,12 @@ export default class Dashboard extends Component{
                               );}
                           },
                           {
-                            title: 'Jobs',
-                            iconName: 'suitcase',
+                            title: 'Login',
+                            iconName: 'user',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
                                   <ToolbarAndroid style={styles.toolbar}
-                                                  title={'Jobs'}
+                                                  title={'Login'}
                                                   titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
