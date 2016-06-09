@@ -101,7 +101,13 @@ export default class Dashboard extends Component{
 		);
 	}
 	renderListViewRow = (row, pushNavBarTitle) => {
-		return(
+		//console.log(row,'this is row,===============+++++++++==============')
+		return (
+			<Text>
+				{row.name}
+			</Text>
+		)
+		/*return(
 			<TouchableHighlight underlayColor={'#f3f3f2'}
 			                    onPress={()=>this.selectRow(row, pushNavBarTitle)}>
 				<View style={styles.rowContainer}>
@@ -119,13 +125,14 @@ export default class Dashboard extends Component{
 					</View>
 				</View>
 			</TouchableHighlight>
-		);
+		);*/
 	}
 	listViewOnRefresh (page, callback, api_endpoint){
+		var api_endpoint = 'http://www.stylewe.com/rest/product';
+
 		if (page != 1 && this.state.topStoryIDs){
 			this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
 		}else {
-			var api_endpoint = 'http://www.stylewe.com/rest/product';
 			axios.get(api_endpoint)
 				.then((topStoryIDs) => {
 					this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
@@ -142,7 +149,6 @@ export default class Dashboard extends Component{
 		}
 	}
 	fetchStoriesUsingTopStoryIDs (topStoryIDs, startIndex, amountToAdd, callback){
-		console.log(topStoryIDs,startIndex,amountToAdd)
 		var rowsData = [];
 		var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
 		function iterateAndFetch(){
@@ -162,7 +168,8 @@ export default class Dashboard extends Component{
 				return;
 			}
 		}
-		iterateAndFetch();
+		//iterateAndFetch();
+		callback(topStoryIDs);
 		this.setState({lastIndex: endIndex});
 	}
 	selectRow = (row, pushNavBarTitle) => {

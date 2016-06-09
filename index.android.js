@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import Dashboard from './App/Views/Dashboard/index.android';
 
+console.disableYellowBox = true;
+
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
 	if (!this.onMainScreen()) {

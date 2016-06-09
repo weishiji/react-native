@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Text,
     View,
+	Image,
     TouchableOpacity,
 	TouchableHighlight,
     Platform
@@ -14,7 +15,10 @@ import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import axios from 'axios';
 
-/*export default class RefreshableListView extends Component {
+
+
+
+export default class RefreshableListView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,12 +28,40 @@ import axios from 'axios';
 			renderHeader: props.renderHeader ? props.renderHeader : null,
 		}
 	}
+	handleRawData (dataArr) {
+		var rows = {};
+		for(var i=0;i<dataArr.length;i+=1){
+			var temp = dataArr[i];
+			rows[temp.product_id] = temp;
+		}
+		return rows;
+	}
 	_onFetch  (page = 1, callback, options) {
-		axios.get('http://www.stylewe.com/rest/product')
+		var api_point = 'http://www.stylewe.com/rest/product'
+		/*axios.get('http://www.stylewe.com/rest/product')
+			.then(function(response){
+				console.log(response,'-------===-=0-=0-=0-=0-=0-=0=-0=-0=0=-0=-0=0-0-=0=-')
+			})*/
+		/*axios.get('http://www.stylewe.com/rest/product')
 			.then((dt) => {
-				callback(dt)
-			})
-		/!*setTimeout(() => {
+				var rows = {};
+				for(var i=0;i<dt.length;i+=1){
+					var temp = dt[i];
+					rows[temp.product_id] = temp;
+				}
+
+				callback(rows)
+			})*/
+		axios.get(api_point)
+			.then((response) => {
+				var rows = [];
+				for(let i=0;i<response['data'].length;i+=1){
+					let temp = response['data'][i];
+					rows[temp.product_id] = [temp];
+				}
+				callback(rows);
+			});
+		/*setTimeout(() => {
 			var header = 'Header '+page;
 			var rows = {};
 			rows[header] = ['row '+((page - 1) * 3 + 1), 'row '+((page - 1) * 3 + 2), 'row '+((page - 1) * 3 + 3)];
@@ -41,27 +73,37 @@ import axios from 'axios';
 				callback(rows);
 			}
 
-		}, 1000);*!/
+		}, 1000);*/
 	}
 	_onPress (rowData) {
-		console.log(rowData,'lxg')
+		//console.log(rowData,'lxg')
 	}
 	_renderRowView (rowData) {
-		console.log(rowData,'this is row data on render view')
+		console.log(rowData,'this is data')
 		return (
 			<TouchableHighlight
 				style={customStyles.row}
 				underlayColor='#c8c7cc'
 				onPress={() => this._onPress(rowData)}
 			>
+				<View style={{flexDirection:'row'}}>
+					<View style={{width:100}}>
+						<Image source={{uri: 'http://www.stylewe.com/image_cache/resize/300x300/' + rowData.image}}
+						       style={{width: 200, height: 200,alignSelf:'center'}} />
+						<Text>{rowData.model}</Text>
+						<Text>{rowData.sale.price.price}</Text>
+						<Text style={{marginTop:5,textAlign:'center',fontSize:11,color:'#555555'}}>
+							{rowData.name}
+						</Text>
+					</View>
+				</View>
 
 			</TouchableHighlight>
 		);
 	}
 	_renderSectionHeaderView(sectionData, sectionID) {
-		console.log(sectionData,'this is section data')
 		return (
-			<View style={customStyles.header} key={sectionID}>
+			<View style={customStyles.header}>
 				<Text style={customStyles.headerTitle}>
 					{sectionID}
 				</Text>
@@ -190,7 +232,7 @@ import axios from 'axios';
 					renderSeparator={(sectionID, rowID) => this._renderSeparatorView}
 
 					withSections={true} // enable sections
-					sectionHeaderView={this._renderSectionHeaderView}
+					//sectionHeaderView={this._renderSectionHeaderView}
 
 					PullToRefreshViewAndroidProps={{
 			            colors: ['#fff'],
@@ -200,10 +242,10 @@ import axios from 'axios';
 			</View>
 		);
 	}
-}*/
+}
 
 
-export default class RefreshableListView extends Component {
+/*export default class RefreshableListView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -266,13 +308,13 @@ export default class RefreshableListView extends Component {
 		if(this.state.renderHeader){
 			return this.props.renderHeader();
 		}
-		/*return (<View style={styles.header}>
+		/!*return (<View style={styles.header}>
 			<Text style={styles.headerTitle}>
 				{sectionID}
 			</Text>
-		</View>);*/
+		</View>);*!/
 	}
-}
+}*/
 
 var styles = StyleSheet.create({
     container: {
@@ -338,7 +380,7 @@ var customStyles = {
 	},
 	row: {
 		padding: 10,
-		height: 44,
+		height: 300,
 	},
 	header: {
 		backgroundColor: '#50a4ff',
