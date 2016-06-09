@@ -38,20 +38,6 @@ export default class RefreshableListView extends Component {
 	}
 	_onFetch  (page = 1, callback, options) {
 		var api_point = 'http://www.stylewe.com/rest/product'
-		/*axios.get('http://www.stylewe.com/rest/product')
-			.then(function(response){
-				console.log(response,'-------===-=0-=0-=0-=0-=0-=0=-0=-0=0=-0=-0=0-0-=0=-')
-			})*/
-		/*axios.get('http://www.stylewe.com/rest/product')
-			.then((dt) => {
-				var rows = {};
-				for(var i=0;i<dt.length;i+=1){
-					var temp = dt[i];
-					rows[temp.product_id] = temp;
-				}
-
-				callback(rows)
-			})*/
 		axios.get(api_point)
 			.then((response) => {
 				var rows = [];
@@ -61,25 +47,11 @@ export default class RefreshableListView extends Component {
 				}
 				callback(rows);
 			});
-		/*setTimeout(() => {
-			var header = 'Header '+page;
-			var rows = {};
-			rows[header] = ['row '+((page - 1) * 3 + 1), 'row '+((page - 1) * 3 + 2), 'row '+((page - 1) * 3 + 3)];
-			if (page === 5) {
-				callback(rows, {
-					allLoaded: true, // the end of the list is reached
-				});
-			} else {
-				callback(rows);
-			}
-
-		}, 1000);*/
 	}
 	_onPress (rowData) {
 		//console.log(rowData,'lxg')
 	}
 	_renderRowView (rowData) {
-		console.log(rowData,'this is data')
 		return (
 			<TouchableHighlight
 				style={customStyles.row}
@@ -204,9 +176,9 @@ export default class RefreshableListView extends Component {
 	render() {
 		return (
 			<View style={screenStyles.container}>
-				<View style={screenStyles.navBar}>
+				{/*<View style={screenStyles.navBar}>
 					<Text style={screenStyles.navBarTitle}>Gifted ListView</Text>
-				</View>
+				</View>*/}
 				<GiftedListView
 					rowView={this._renderRowView}
 

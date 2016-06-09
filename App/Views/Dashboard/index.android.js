@@ -26,12 +26,12 @@ export default class Dashboard extends Component{
 	render () {
 		return(
 			<TabBar structure={[{
-                            title: 'Ask HN',
-                            iconName: 'comment',
+                            title: 'Home',
+                            iconName: 'home',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
                                 <ToolbarAndroid style={styles.toolbar}
-                                                  title={'Show HN'}
+                                                  title={'Home'}
                                                   titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Ask Story')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
