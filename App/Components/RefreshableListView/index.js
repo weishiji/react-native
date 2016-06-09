@@ -28,20 +28,17 @@ export default class RefreshableListView extends Component {
 			renderHeader: props.renderHeader ? props.renderHeader : null,
 		}
 	}
-	handleRawData (response) {
-		var rows = [];
-		for(let i=0;i<response['data'].length;i+=1){
-			let temp = response['data'][i];
-			rows[temp.product_id] = [temp];
-		}
+	handleRawData (response,page) {
+		var rows = {};
+		rows[page] = response['data']['list'];
 		return rows;
 	}
 	_onFetch  (page = 1, callback, options) {
-		var api_point = 'http://www.stylewe.com/rest/product';
-		
+		var api_point = 'http://www.stylewe.com/rest/productindex?limit=5&start=' + (page-1) * 5;
+
 		axios.get(api_point)
 			.then((response) => {
-				var rows = this.handleRawData(response);
+				var rows = this.handleRawData(response,page);
 				callback(rows);
 			});
 	}

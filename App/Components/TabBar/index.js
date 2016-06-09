@@ -20,13 +20,16 @@ export default class TabBar extends Component {
 
 	componentWillMount() {
 	}
-
+	handlerChangeTab (e) {
+		//console.warn(e)
+		console.log(this)
+	}
 	render() {
 		if (Platform.OS === 'android') {
 			return (
 				<ScrollableTabView
 					renderTabBar={() => <CustomTabBar />}
-					onChangeTab={(o)=>{}}
+					onChangeTab={(o)=>this.handlerChangeTab(o)}
 					tabBarPosition={'bottom'}
 					initialPage={this.state.selectedTab}>
 					{this.state.structure.map((tabProps, tabIndex) =>
