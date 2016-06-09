@@ -12,8 +12,9 @@ import {
 
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
+import axios from 'axios';
 
-export default class RefreshableListView extends Component {
+/*export default class RefreshableListView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,7 +25,11 @@ export default class RefreshableListView extends Component {
 		}
 	}
 	_onFetch  (page = 1, callback, options) {
-		setTimeout(() => {
+		axios.get('http://www.stylewe.com/rest/product')
+			.then((dt) => {
+				callback(dt)
+			})
+		/!*setTimeout(() => {
 			var header = 'Header '+page;
 			var rows = {};
 			rows[header] = ['row '+((page - 1) * 3 + 1), 'row '+((page - 1) * 3 + 2), 'row '+((page - 1) * 3 + 3)];
@@ -36,23 +41,25 @@ export default class RefreshableListView extends Component {
 				callback(rows);
 			}
 
-		}, 1000);
+		}, 1000);*!/
 	}
 	_onPress (rowData) {
 		console.log(rowData,'lxg')
 	}
 	_renderRowView (rowData) {
+		console.log(rowData,'this is row data on render view')
 		return (
 			<TouchableHighlight
 				style={customStyles.row}
 				underlayColor='#c8c7cc'
 				onPress={() => this._onPress(rowData)}
 			>
-				<Text>{rowData}</Text>
+
 			</TouchableHighlight>
 		);
 	}
 	_renderSectionHeaderView(sectionData, sectionID) {
+		console.log(sectionData,'this is section data')
 		return (
 			<View style={customStyles.header} key={sectionID}>
 				<Text style={customStyles.headerTitle}>
@@ -193,10 +200,10 @@ export default class RefreshableListView extends Component {
 			</View>
 		);
 	}
-}
+}*/
 
 
-/*export default class RefreshableListView extends Component {
+export default class RefreshableListView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -256,18 +263,16 @@ export default class RefreshableListView extends Component {
 		);
 	}
 	renderHeaderView = (sectionData, sectionID) => {
-		console.log(this.state.renderHeader,'render header')
-
 		if(this.state.renderHeader){
 			return this.props.renderHeader();
 		}
-		return (<View style={styles.header}>
+		/*return (<View style={styles.header}>
 			<Text style={styles.headerTitle}>
 				{sectionID}
 			</Text>
-		</View>);
+		</View>);*/
 	}
-}*/
+}
 
 var styles = StyleSheet.create({
     container: {

@@ -13,6 +13,7 @@ import ToolbarAndroid from 'ToolbarAndroid';
 import TabBar from '../../Components/TabBar';
 import api from '../../Network/api.js'
 import RefreshableListView from '../../Components/RefreshableListView'
+import axios from 'axios';
 
 export default class Dashboard extends Component{
 	constructor(props) {
@@ -29,6 +30,9 @@ export default class Dashboard extends Component{
                             iconName: 'comment',
                             renderContent: () => {return(
                                 <View style={{flex:1}}>
+                                <ToolbarAndroid style={styles.toolbar}
+                                                  title={'Show HN'}
+                                                  titleColor={'#FFFFFF'}/>
                                   <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Ask Story')}
                                                        onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
                                                        backgroundColor={'#F6F6EF'}/>
@@ -120,19 +124,25 @@ export default class Dashboard extends Component{
 	listViewOnRefresh (page, callback, api_endpoint){
 		if (page != 1 && this.state.topStoryIDs){
 			this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
-		}
-		else {
-			fetch(api_endpoint)
+		}else {
+			var api_endpoint = 'http://www.stylewe.com/rest/product';
+			axios.get(api_endpoint)
+				.then((topStoryIDs) => {
+					this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
+					this.setState({topStoryIDs: topStoryIDs});
+				})
+			/*fetch(api_endpoint)
 				.then((response) => response.json())
 				.then((topStoryIDs) => {
 
 					this.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
 					this.setState({topStoryIDs: topStoryIDs});
 				})
-				.done();
+				.done();*/
 		}
 	}
 	fetchStoriesUsingTopStoryIDs (topStoryIDs, startIndex, amountToAdd, callback){
+		console.log(topStoryIDs,startIndex,amountToAdd)
 		var rowsData = [];
 		var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
 		function iterateAndFetch(){
