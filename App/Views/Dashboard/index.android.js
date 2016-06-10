@@ -15,6 +15,7 @@ import api from '../../Network/api.js'
 import RefreshableListView from '../../Components/RefreshableListView'
 import axios from 'axios';
 
+import LoginComponent from '../Login/index.android';
 export default class Dashboard extends Component{
 	constructor(props) {
 		super(props);
@@ -85,9 +86,7 @@ export default class Dashboard extends Component{
                                   <ToolbarAndroid style={styles.toolbar}
                                                   title={'Login'}
                                                   titleColor={'#FFFFFF'}/>
-                                  <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
-                                                       onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
-                                                       backgroundColor={'#F6F6EF'}/>
+									<LoginComponent {...this.props} />
                                 </View>
                               );}
                           },]}
