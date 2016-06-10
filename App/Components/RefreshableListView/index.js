@@ -1,5 +1,9 @@
 
 import React, {Component,PropTypes} from 'react';
+import {
+	getTheme,
+} from 'react-native-material-kit';
+
 
 import {
     StyleSheet,
@@ -15,6 +19,7 @@ import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import axios from 'axios';
 
+const theme = getTheme();
 
 
 
@@ -53,20 +58,19 @@ export default class RefreshableListView extends Component {
 				underlayColor='#c8c7cc'
 				onPress={() => this._onPress(rowData)}
 			>
-				<View style={{flexDirection:'row'}}>
-					<View style={{width:100}}>
-						<Image source={{uri: 'http://www.stylewe.com/image_cache/resize/300x300/' + rowData.image}}
-						       style={{width: 200, height: 200,alignSelf:'center'}} />
-						<Text>{rowData.model}</Text>
-						<Text>{rowData.sale.price.price}</Text>
-						<Text style={{marginTop:5,textAlign:'center',fontSize:11,color:'#555555'}}>
-							{rowData.name}
-						</Text>
-					</View>
+				<View style={theme.cardStyle}>
+					<Image source={{uri : 'http://www.stylewe.com/image_cache/resize/300x300/' + rowData.image}} style={theme.cardImageStyle} />
+					<Text style={theme.cardTitleStyle}>Welcome</Text>
+					<Text style={theme.cardContentStyle}>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Mauris sagittis pellentesque lacus eleifend lacinia...
+					</Text>
+					<View style={theme.cardMenuStyle}>{rowData.model}</View>
+					<Text>{rowData.model}</Text>
+					<Text>{rowData.sale.price.price}</Text>
 				</View>
-
 			</TouchableHighlight>
-		);
+		)
 	}
 	_renderSectionHeaderView(sectionData, sectionID) {
 		return (
