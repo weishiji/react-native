@@ -22,7 +22,7 @@ export default class TabBar extends Component {
 	}
 	handlerChangeTab (e) {
 		//console.warn(e)
-		console.log(this)
+		//console.log(this)
 	}
 	render() {
 		if (Platform.OS === 'android') {
