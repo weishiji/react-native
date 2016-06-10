@@ -33,9 +33,7 @@ export default class Dashboard extends Component{
                                 <ToolbarAndroid style={styles.toolbar}
                                                   title={'Home'}
                                                   titleColor={'#FFFFFF'}/>
-                                  <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Ask Story')}
-                                                       onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
-                                                       backgroundColor={'#F6F6EF'}/>
+                                  <RefreshableListView {...this.props}/>
                                 </View>
                               );}
                           },
@@ -47,9 +45,7 @@ export default class Dashboard extends Component{
                                   <ToolbarAndroid style={styles.toolbar}
                                                   title={'Discovery'}
                                                   titleColor={'#FFFFFF'}/>
-                                  <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
-                                                       onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
-                                                       backgroundColor={'#F6F6EF'}/>
+                                  <RefreshableListView {...this.props}/>
                                 </View>
                               );}
                           },

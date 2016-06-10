@@ -49,7 +49,10 @@ export default class RefreshableListView extends Component {
 	}
 	_onPress (rowData) {
 		//console.log(rowData,'lxg')
-		console.log(this.props.navigator)
+		this.props.navigator.push({
+			id: 'Product',
+			product_id: rowData.product_id,
+		});
 	}
 	_renderRowView (rowData) {
 		return (

@@ -14,7 +14,6 @@ import {
 	Image,
 	BackAndroid
 } from 'react-native';
-import Dashboard from './App/Views/Dashboard/index.android';
 
 console.disableYellowBox = true;
 
@@ -26,7 +25,8 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 	_navigator.pop();
 	return true;
 });
-
+import Dashboard from './App/Views/Dashboard/index.android';
+import Product from './App/Views/Product/index.android';
 
 class AwesomeProject extends Component {
 	constructor(props) {
@@ -41,6 +41,9 @@ class AwesomeProject extends Component {
 		switch (route.id) {
 			case 'Dashboard':
 				return (<Dashboard navigator={navigator} />);
+				break;
+			case 'Product' :
+				return (<Product product_id={route.product_id} navigator={navigator} />);
 				break;
 		}
 	}
