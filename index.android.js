@@ -20,9 +20,8 @@ console.disableYellowBox = true;
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
-	if (!this.onMainScreen()) {
-		this.goBack();
-		return true;
+	if (_navigator.getCurrentRoutes().length === 1  ) {
+		return false;
 	}
 	_navigator.pop();
 	return true;

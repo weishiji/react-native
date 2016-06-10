@@ -44,6 +44,7 @@ export default class RefreshableListView extends Component {
 	}
 	_onPress (rowData) {
 		//console.log(rowData,'lxg')
+		console.log(this.props.navigator)
 	}
 	_renderRowView (rowData) {
 		return (
@@ -128,7 +129,7 @@ export default class RefreshableListView extends Component {
 			</TouchableHighlight>
 		);
 	}
-	_renderPaginationFetchigView() {
+	_renderPaginationFetchingView() {
 		return (
 			<View style={customStyles.paginationView}>
 				<GiftedSpinner />
@@ -174,7 +175,7 @@ export default class RefreshableListView extends Component {
 					<Text style={screenStyles.navBarTitle}>Gifted ListView</Text>
 				</View>*/}
 				<GiftedListView
-					rowView={this._renderRowView}
+					rowView={this._renderRowView.bind(this)}
 
 					onFetch={this._onFetch.bind(this)}
 					initialListSize={12} // the maximum number of rows displayable without scrolling (height of the listview / height of row)
@@ -182,7 +183,7 @@ export default class RefreshableListView extends Component {
 					firstLoader={true} // display a loader for the first fetching
 
 					pagination={true} // enable infinite scrolling using touch to load more
-					paginationFetchigView={this._renderPaginationFetchigView}
+					paginationFetchigView={this._renderPaginationFetchingView}
 					paginationAllLoadedView={this._renderPaginationAllLoadedView}
 					paginationWaitingView={this._renderPaginationWaitingView}
 
