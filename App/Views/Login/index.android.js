@@ -14,6 +14,7 @@ import {
 	MKTextField,
 	MKColor,
 	mdl,
+	MKButton,
 } from 'react-native-material-kit';
 
 
@@ -57,17 +58,9 @@ const TextfieldWithFloatingLabel = MKTextField.textfieldWithFloatingLabel()
 	.withKeyboardType('numeric')
 	.build();
 
-const ColoredTextfield = mdl.Textfield.textfield()
-	.withPlaceholder('Text...')
-	.withStyle(styles.textfield)
-	.withTintColor(MKColor.Lime)
-	.withTextInputStyle({color: MKColor.Orange})
-	.build();
-
-const PasswordInput = mdl.Textfield.textfieldWithFloatingLabel()
-	.withPassword(true)
-	.withPlaceholder('Password')
-	.withDefaultValue('!123')
+const ColoredTextfield = mdl.Textfield.textfieldWithFloatingLabel()
+	.withPlaceholder('Email')
+	.withDefaultValue('')
 	.withHighlightColor(MKColor.Lime)
 	.withStyle(styles.textfieldWithFloatingLabel)
 	.withOnFocus(() => console.log('Focus'))
@@ -78,17 +71,64 @@ const PasswordInput = mdl.Textfield.textfieldWithFloatingLabel()
 	.withOnChangeText((e) => console.log('ChangeText', e))
 	.build();
 
+const PasswordInput = mdl.Textfield.textfieldWithFloatingLabel()
+	.withPassword(true)
+	.withPlaceholder('Password')
+	.withDefaultValue('')
+	.withHighlightColor(MKColor.Lime)
+	.withStyle(styles.textfieldWithFloatingLabel)
+	.withOnFocus(() => console.log('Focus'))
+	.withOnBlur(() => console.log('Blur'))
+	.withOnEndEditing((e) => console.log('EndEditing', e.nativeEvent.text))
+	.withOnSubmitEditing((e) => console.log('SubmitEditing', e.nativeEvent.text))
+	.withOnTextChange((e) => console.log('TextChange', e))
+	.withOnChangeText((e) => console.log('ChangeText', e))
+	.build();
+
+
 class TextFields extends Component{
 	componentDidMount () {
 		setTimeout((() => {
 			if (this.refs.defaultInput) {
-				this.refs.defaultInput.focus();
+				//this.refs.defaultInput.focus();
 			}
 		}), 1000);
 	}
 
 	render () {
 		return (
+			<ScrollView style={styles.scrollView}
+			            contentContainerStyle={styles.container}>
+				<View style={styles.row}>
+					<View style={styles.col}>
+						<ColoredTextfield/>
+						<Text style={styles.legendLabel}>Textfield</Text>
+					</View>
+					<View style={styles.col}>
+						<PasswordInput/>
+						<Text style={styles.legendLabel}>With floating label</Text>
+					</View>
+					<View>
+						<MKButton
+							backgroundColor={MKColor.Teal}
+							shadowRadius={2}
+							shadowOffset={{width:0, height:2}}
+							shadowOpacity={.7}
+							shadowColor="black"
+							onPress={() => {
+                                console.log('hi, raised button!');
+                            }}
+						>
+							<Text pointerEvents="none"
+							      style={{color: 'white', fontWeight: 'bold',}}>
+								RAISED BUTTON
+							</Text>
+						</MKButton>
+					</View>
+				</View>
+			</ScrollView>
+		)
+		/*return (
 			<ScrollView style={styles.scrollView}
 			            contentContainerStyle={styles.container}>
 				<View style={styles.row}>
@@ -112,7 +152,7 @@ class TextFields extends Component{
 					</View>
 				</View>
 			</ScrollView>
-		);
+		);*/
 	}
 }
 
