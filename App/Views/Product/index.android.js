@@ -52,9 +52,7 @@ export default class Product extends Component{
 				</View>
 			)
 		}else{
-			return(
-				<View></View>
-			)
+			return (null)
 		}
 
 	}
