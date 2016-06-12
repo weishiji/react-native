@@ -63,14 +63,12 @@ export default class Product extends Component{
 							overflowIconName="md-more"
 						/>
 					</View>
-
 					<View style={theme.cardStyle}>
 						<Image source={{uri : 'http://www.stylewe.com/image_cache/resize/300x300/' + product.image}} style={theme.cardImageStyle} />
 						<Text style={theme.cardContentStyle}>
 							{product.model}
 						</Text>
 						<Text style={theme.cardContentStyle}>{product.name}</Text>
-
 					</View>
 				</View>
 			)
