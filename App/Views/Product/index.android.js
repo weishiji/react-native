@@ -32,6 +32,9 @@ export default class Product extends Component{
 		}
 	}
 	componentWillMount () {
+
+	}
+	componentDidMount () {
 		axios.get(api.PRODUCT_DETAIL + this.props.product_id)
 			.then((dt) => {
 				this.setState({
@@ -39,9 +42,6 @@ export default class Product extends Component{
 					,'product' : dt['data']
 				});
 			})
-	}
-	componentDidMount () {
-
 	}
 	render () {
 		if(this.state.loading){
