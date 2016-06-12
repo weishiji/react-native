@@ -94,7 +94,16 @@ class TextFields extends Component{
 			}
 		}), 1000);
 	}
-
+	_onPress () {
+		axios.post(api.LOGIN,{
+			'email' : 'liuxg1986@hotmail.com'
+			,'password' : 'liuxiaoguang'
+		}).then((dt) => {
+			this.props.navigator.push({
+				id: 'Dashboard'
+			});
+		})
+	}
 	render () {
 		return (
 			<ScrollView style={styles.scrollView}
@@ -115,13 +124,11 @@ class TextFields extends Component{
 							shadowOffset={{width:0, height:2}}
 							shadowOpacity={.7}
 							shadowColor="black"
-							onPress={() => {
-                                console.log('hi, raised button!');
-                            }}
+							onPress={() => this._onPress()}
 						>
 							<Text pointerEvents="none"
 							      style={{color: 'white', fontWeight: 'bold',}}>
-								RAISED BUTTON
+								LOGIN
 							</Text>
 						</MKButton>
 					</View>

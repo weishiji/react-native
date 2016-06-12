@@ -63,14 +63,11 @@ export default class RefreshableListView extends Component {
 			>
 				<View style={theme.cardStyle}>
 					<Image source={{uri : 'http://www.stylewe.com/image_cache/resize/300x300/' + rowData.image}} style={theme.cardImageStyle} />
-					<Text style={theme.cardTitleStyle}>Welcome</Text>
 					<Text style={theme.cardContentStyle}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Mauris sagittis pellentesque lacus eleifend lacinia...
+						{rowData.name}
 					</Text>
-					<View style={theme.cardMenuStyle}>{rowData.model}</View>
-					<Text>{rowData.model}</Text>
-					<Text>{rowData.sale.price.price}</Text>
+					<Text style={theme.cardContentStyle}>{rowData.model}</Text>
+					<Text style={theme.cardContentStyle}>{rowData.sale.price.price}</Text>
 				</View>
 			</TouchableHighlight>
 		)
