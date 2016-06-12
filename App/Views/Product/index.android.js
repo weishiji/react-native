@@ -6,23 +6,57 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	Image,
 	TouchableHighlight
 } from 'react-native';
 
-import ToolbarAndroid from 'ToolbarAndroid';
-import TabBar from '../../Components/TabBar';
+import {
+	getTheme,
+} from 'react-native-material-kit';
+
+const theme = getTheme();
+
 import api from '../../Network/api.js'
-import RefreshableListView from '../../Components/RefreshableListView'
 import axios from 'axios';
 
 export default class Product extends Component{
 	constructor(props) {
 		super(props);
+		this.state = {
+			loading : false
+			,product : null
+		}
+	}
+	componentWillMount () {
+		axios.get(api.PRODUCT_DETAIL + this.props.product_id)
+			.then((dt) => {
+				this.setState({
+					'loading' : true
+					,'product' : dt['data']
+				});
+			})
+	}
+	componentDidMount () {
+
 	}
 	render () {
-		return(
-			<Text>hell this {this.props.product_id}</Text>
-		)
+		if(this.state.loading){
+			var product = this.state.product;
+			return (
+				<View style={theme.cardStyle}>
+					<Image source={{uri : 'http://www.stylewe.com/image_cache/resize/300x300/' + product.image}} style={theme.cardImageStyle} />
+					<Text style={theme.cardContentStyle}>
+						{product.model}
+					</Text>
+					<Text style={theme.cardContentStyle}>{product.name}</Text>
+				</View>
+			)
+		}else{
+			return(
+				<View></View>
+			)
+		}
+
 	}
 
 }
