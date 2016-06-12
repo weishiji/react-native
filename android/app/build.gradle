@@ -125,6 +125,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':RNMaterialKit')
+    compile project(':react-native-vector-icons') //Integrating library for getImageSource and ToolbarAndroid support字体图标的扩展
 }
 
 // Run this once to be able to run the application with BUCK
