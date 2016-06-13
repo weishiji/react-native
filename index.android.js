@@ -27,6 +27,7 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 });
 import Dashboard from './App/Views/Dashboard/index.android';
 import Product from './App/Views/Product/index.android';
+import User from './App/Views/User/index.android'
 
 class AwesomeProject extends Component {
 	constructor(props) {
@@ -44,6 +45,9 @@ class AwesomeProject extends Component {
 				break;
 			case 'Product' :
 				return (<Product product_id={route.product_id} navigator={navigator} />);
+				break;
+			case 'User' :
+				return (<User user_id={route.user_id} navigator={navigator} />);
 				break;
 		}
 	}

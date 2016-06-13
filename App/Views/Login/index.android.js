@@ -99,8 +99,10 @@ class TextFields extends Component{
 			'email' : 'liuxg1986@hotmail.com'
 			,'password' : 'liuxiaoguang'
 		}).then((dt) => {
+			console.log(dt,'this is login response')
 			this.props.navigator.push({
-				id: 'Dashboard'
+				id: 'User'
+				,user_id : dt['data']['id']
 			});
 		})
 	}
