@@ -27,7 +27,8 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 });
 import Dashboard from './App/Views/Dashboard/index.android';
 import Product from './App/Views/Product/index.android';
-import User from './App/Views/User/index.android'
+import User from './App/Views/User/index.android';
+import Web from './App/Views/Web/index.android';
 
 class AwesomeProject extends Component {
 	constructor(props) {
@@ -49,6 +50,9 @@ class AwesomeProject extends Component {
 			case 'User' :
 				return (<User user_id={route.user_id} navigator={navigator} />);
 				break;
+			case 'Web' :
+				return (<Web navigator={navigator} />);
+				break;
 		}
 	}
 	render() {
@@ -56,7 +60,7 @@ class AwesomeProject extends Component {
 			<Navigator
 				style={styles.container}
 				tintColor='#FF6600'
-				initialRoute={{id: 'Dashboard'}}
+				initialRoute={{id: 'Web'}}
 				renderScene={this.navigatorRenderScene}/>
 		);
 	}
