@@ -12,19 +12,20 @@ import {
 	Text,
 	View,
 	Image,
+	Platform,
 	BackAndroid
 } from 'react-native';
 
 console.disableYellowBox = true;
 
 var _navigator;
-BackAndroid.addEventListener('hardwareBackPress', () => {
+/*BackAndroid.addEventListener('hardwareBackPress', () => {
 	if (_navigator.getCurrentRoutes().length === 1  ) {
 		return false;
 	}
 	_navigator.pop();
 	return true;
-});
+});*/
 import Dashboard from './App/Views/Dashboard/index.android';
 import Product from './App/Views/Product/index.android';
 import User from './App/Views/User/index.android';
@@ -34,12 +35,9 @@ class AwesomeProject extends Component {
 	constructor(props) {
 		super(props);
 	}
-
-	componentWillMount() {
-
-	}
 	navigatorRenderScene (route, navigator) {
 		_navigator = navigator;
+		this.navigator = navigator;
 		switch (route.id) {
 			case 'Dashboard':
 				return (<Dashboard navigator={navigator} />);
@@ -53,15 +51,19 @@ class AwesomeProject extends Component {
 			case 'Web' :
 				return (<Web navigator={navigator} />);
 				break;
+			default :
+				return (null);
+				break;
 		}
 	}
+
 	render() {
 		return (
 			<Navigator
 				style={styles.container}
 				tintColor='#FF6600'
 				initialRoute={{id: 'Web'}}
-				renderScene={this.navigatorRenderScene}/>
+				renderScene={this.navigatorRenderScene.bind(this)}/>
 		);
 	}
 }
