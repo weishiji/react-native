@@ -42,7 +42,7 @@ export default class Web extends Component{
 
 	}
 	componentDidMount () {
-
+		console.log('web view is running')
 	}
 	onNavigationStateChange (navState) {
 		this.setState({
@@ -64,6 +64,9 @@ export default class Web extends Component{
 	goForward () {
 		this.refs[WEBVIEW_REF].goForward();
 	}
+	_onLoadStart () {
+		//console.log(this.refs[WEBVIEW_REF],'this is name')
+	}
 	render () {
 		return (
 			<WebView
@@ -73,8 +76,9 @@ export default class Web extends Component{
 				javaScriptEnabled={true}
 				domStorageEnabled={true}
 				decelerationRate="normal"
-				onNavigationStateChange={() => this.onNavigationStateChange}
-				onShouldStartLoadWithRequest={() => this.onShouldStartLoadWithRequest}
+				onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+				onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
+				onLoadStart={this._onLoadStart.bind(this)}
 				startInLoadingState={true}
 			/>
 		)
