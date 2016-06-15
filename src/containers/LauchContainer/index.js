@@ -12,6 +12,7 @@ class LauchContainer extends Component<void, void, void> {
       <Container>
         <Title>Hey you ! =)</Title>
         <Link onPress={Actions.counter}>Go to counter</Link>
+	      <Link onPress={Actions.category}>Go to category</Link>
       </Container>
     )
   }

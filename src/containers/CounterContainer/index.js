@@ -18,7 +18,7 @@ class CounterContainer extends Component<void, Props, void> {
     const { counter, dispatch } = this.props
     return (
       <Container>
-        <Title>Counter</Title>
+        <Title>hello world</Title>
         <Counter
           value={counter}
           decrement={() => dispatch(decrement())}

@@ -9,7 +9,6 @@ import CounterContainer from '@containers/CounterContainer'
 
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
-	console.log(Actions,'this is actions')
 	try {
 		Actions.pop();
        return true;
@@ -23,6 +22,7 @@ const scenes = Actions.create(
   <Scene key="app" navigationBarStyle={styles.container}>
     <Scene key="welcome" component={LauchContainer} title="Welcome" />
     <Scene key="counter" component={CounterContainer} title="Counter" />
+    <Scene key="category" component={CounterContainer} />
   </Scene>
 )
 
