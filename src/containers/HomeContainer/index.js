@@ -1,8 +1,19 @@
 import React, { PropTypes } from 'react';
+import {View,Text,} from 'react-native';
 import Drawer from 'react-native-drawer';
 import { DefaultRenderer, Actions } from 'react-native-router-flux';
 
-import TabView from './TabView';
+class LeftMenu extends React.Component {
+  render () {
+    return (
+      <View>
+        <Text>
+           this is left menu
+        </Text>
+      </View>
+    )
+  }
+}
 
 const propTypes = {
   navigationState: PropTypes.object,
@@ -18,7 +29,7 @@ class NavigationDrawer extends React.Component {
         type="displace"
         onOpen={() => Actions.refresh({ key: state.key, open: true })}
         onClose={() => Actions.refresh({ key: state.key, open: false })}
-        content={<TabView />}
+        content={<LeftMenu />}
         tapToClose
         openDrawerOffset={0.2}
         panCloseMask={0.2}

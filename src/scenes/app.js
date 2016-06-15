@@ -9,7 +9,13 @@
 
 
 import React from 'react';
-import {AppRegistry, Navigator, StyleSheet, Text, View,BackAndroid,ToastAndroid,} from 'react-native'
+import {AppRegistry, Navigator, StyleSheet, Text, View,BackAndroid,ToastAndroid,} from 'react-native';
+import Button from "react-native-button";
+
+// 迁移
+import Home from '@containers/HomeContainer';
+
+
 import Launch from './Example/Launch'
 import Register from './Example/Register'
 import Login from './Example/Login'
@@ -17,11 +23,10 @@ import Login2 from './Example/Login2'
 import Login3 from './Example/Login3'
 import {Scene, Reducer, Router, Switch, TabBar, Modal, Schema, Actions} from 'react-native-router-flux'
 import Error from './Example/Error'
-import Home from './Example/Home'
+//import Home from './Example/Home'
 import TabView from './Example/TabView'
 import EchoView from './Example/EchoView'
-import NavigationDrawer from './Example/NavigationDrawer'
-import Button from "react-native-button";
+
 
 
 
@@ -120,6 +125,7 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
 //     <Scene key="category" component={CounterContainer} />
 //   </Scene>
 // )
+console.log(TabIcon,'this is what')
 const scenes = Actions.create(
 	<Router key='appRouter' createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
 		<Scene key="modal" component={Modal}>
@@ -134,25 +140,25 @@ const scenes = Actions.create(
 	        <Scene key="register" component={Register} title="Register"/>
 	        <Scene key="register2" component={Register} title="Register2" duration={1}/>
 	        <Scene key="home" component={Home} title="Replace" type="replace"/>
-	        <Scene key="launch" component={Launch} title="Launch" initial={true} />
+	        <Scene key="launch" component={Launch} title="Launch" />
 	        <Scene key="login" direction="vertical"  >
 	            <Scene key="loginModal" direction="vertical" component={Login} title="Login"/>
 	            <Scene key="loginModal2" hideNavBar={true} component={Login2} title="Login2" panHandlers={null} duration={1}/>
 	            <Scene key="loginModal3" hideNavBar={true} component={Login3} title="Login3" panHandlers={null} duration={1}/>
 	        </Scene>
-	        <Scene key="tabbar" component={NavigationDrawer}>
+	        <Scene key="tabbar" component={Home} initial={true}>
 	            <Scene key="main" tabs={true} >
-	                <Scene key="tab1"  title="Tab #1" icon={TabIcon} navigationBarStyle={{backgroundColor:"red"}} titleStyle={{color:"white"}}>
-	                    <Scene key="tab1_1" component={TabView} title="Tab #1_1" onRight={()=>alert("Right button")} rightTitle="Right" />
-	                    <Scene key="tab1_2" component={TabView} title="Tab #1_2" titleStyle={{color:"black"}}/>
+	                <Scene key="tab1" initial={true}  title="Home" icon={TabIcon} navigationBarStyle={styles.container} titleStyle={{color:"white"}}>
+	                    <Scene key="tab1_1" component={TabView} title="Dress" onRight={()=>alert("Right button")} rightTitle="Right" />
+	                    <Scene key="tab1_2" component={TabView} title="Tops" titleStyle={{color:"black"}}/>
 	                </Scene>
-	                <Scene key="tab2" initial={true} title="Tab #2" icon={TabIcon}>
+	                <Scene key="tab2" title="Tab #2" icon={TabIcon}>
 	                    <Scene key="tab2_1" component={TabView} title="Tab #2_1" renderRightButton={()=><Right/>} />
 	                    <Scene key="tab2_2" component={TabView} title="Tab #2_2" hideBackImage onBack={()=>alert("Left button!")} backTitle="Left" duration={1} panHandlers={null}/>
 	                </Scene>
-	                <Scene key="tab3" component={TabView} title="Tab #3" hideTabBar={true} icon={TabIcon}/>
-	                <Scene key="tab4" component={TabView} title="Tab #4" hideNavBar={true} icon={TabIcon}/>
-	                <Scene key="tab5" component={TabView} title="Tab #5" hideTabBar={true} hideNavBar={true} icon={TabIcon}/>
+	                <Scene key="tab3" component={TabView} title="Tab #3" icon={TabIcon}/>
+	                <Scene key="tab4" component={TabView} title="Tab #4" hideNavBar={false} icon={TabIcon}/>
+	                <Scene key="tab5" component={TabView} title="Tab #5" hideTabBar={false} hideNavBar={true} icon={TabIcon}/>
 	            </Scene>
 	        </Scene>
 	    </Scene>
