@@ -1,36 +1,41 @@
-/* @flow */
+import React from 'react';
+import {PropTypes} from "react";
+import {StyleSheet, Text, View} from "react-native";
+import Button from 'react-native-button';
+import { Actions } from 'react-native-router-flux';
 
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { decrement, increment } from '@store/modules/counter'
-import Container from '@components/Container'
-import Title from '@components/Title'
-import Counter from '@components/Counter'
+const contextTypes = {
+  drawer: React.PropTypes.object,
+};
 
-type Props = {
-  counter: number,
-  dispatch: (a: Function) => any,
-}
+const propTypes = {
+  name: PropTypes.string,
+  sceneStyle: View.propTypes.style,
+  title: PropTypes.string,
+};
 
-class CounterContainer extends Component<void, Props, void> {
-  props: Props
-  render() {
-    const { counter, dispatch } = this.props
-    return (
-      <Container>
-        <Title>hello world</Title>
-        <Counter
-          value={counter}
-          decrement={() => dispatch(decrement())}
-          increment={() => dispatch(increment())}
-        />
-      </Container>
-    )
-  }
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    borderColor: 'red',
+  },
+});
 
-const mapStateToProps = (state) => ({
-  counter: state.counter,
-})
+const HomeView = (props, context) => {
+  const drawer = context.drawer;
+  return (
+    <View style={[styles.container, props.sceneStyle ]}>
+      <Text>Tab {props.title}</Text>
+      <Button onPress={Actions.pop}>Back</Button>
+      <Button onPress={() => { drawer.open(); }}>Call left Menu</Button>
+    </View>
+  );
+};
 
-export default connect(mapStateToProps)(CounterContainer)
+HomeView.contextTypes = contextTypes;
+HomeView.propTypes = propTypes;
+
+export default HomeView;

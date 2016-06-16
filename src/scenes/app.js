@@ -123,8 +123,8 @@ const scenes = Actions.create(
   <Router key='appRouter' createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
     <Scene key="root" navigationBarStyle={styles.container}>
       <Scene key="welcome" component={LauchContainer} title="Welcome" hideNavBar={true} hideTabBar={true} />
-      <Scene key="drawer" component={DrawerContainer} title="drawer" hideNavBar={true} hideTabBar={true} >
-        <Scene key='home' component={HomeContainer} title="home" hideNavBar={true} hideTabBar={true} />
+      <Scene key="drawer" component={DrawerContainer} title="drawer" hideNavBar={false} hideTabBar={false} >
+        <Scene key='home' component={HomeContainer} title="home" hideNavBar={false} hideTabBar={false} />
       </Scene>
 
     </Scene>

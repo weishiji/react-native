@@ -18,7 +18,7 @@ class LauchContainer extends Component<void, void, void> {
       () => {
         popToHome();
       }
-    ,3000)
+    ,500)
   }
   render() {
     return (
