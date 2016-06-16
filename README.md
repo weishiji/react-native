@@ -21,6 +21,7 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
 - [React Native Router Flux](https://github.com/aksonov/react-native-router-flux) a router based on new React Native Navigation API
 - [Flow](http://flowtype.org/) adds static typing to JavaScript to improve developer productivity and code quality.
 - [apisauce](https://github.com/skellock/apisauce) HTTP REQUEST
+- [react-native-vector-icons]https://github.com/oblador/react-native-vector-icons ICON FONT
 
 ## Make the awesome
 Just clone the repo
