@@ -13,8 +13,9 @@ import {AppRegistry, Navigator, StyleSheet, Text, View,BackAndroid,ToastAndroid,
 import Button from "react-native-button";
 
 // 迁移
-import Home from '@containers/HomeContainer';
-
+import LauchContainer from '@containers/LauchContainer'
+import DrawerContainer from '@containers/DrawerContainer';
+import HomeContainer from '@containers/HomeContainer';
 
 import Launch from './Example/Launch'
 import Register from './Example/Register'
@@ -111,59 +112,65 @@ const SwitcherPage = function (props) {
 BackAndroid.addEventListener('hardwareBackPress', function() {
 	try {
 		Actions.pop();
-       return true;
+    return true;
    }
    catch (err) {
-       ToastAndroid.show("Cannot pop. Exiting the app...", ToastAndroid.SHORT);
-       return true;
+     ToastAndroid.show("Cannot pop. Exiting the app...", ToastAndroid.SHORT);
+     return true;
    }
 });
-// const scenes = Actions.create(
-//   <Scene key="app" navigationBarStyle={styles.container}>
-//     <Scene key="welcome" component={LauchContainer} title="Welcome" hideNavBar={true} />
-//     <Scene key="counter" component={CounterContainer} title="Counter" hideNavBar={false} />
-//     <Scene key="category" component={CounterContainer} />
-//   </Scene>
-// )
-console.log(TabIcon,'this is what')
 const scenes = Actions.create(
-	<Router key='appRouter' createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
-		<Scene key="modal" component={Modal}>
-	    <Scene key="root" hideNavBar hideTabBar>
-	        <Scene key="echo" clone component={EchoView} getTitle={(navState) => navState.key} />
-	        <Scene key="switcher" component={Switch} selector={(props) => {
-	            return 'text1';
-	        }}>
-	            <Scene key="text1" text="text1" component={(props) => <SwitcherPage {...props} text={currentSwitchPage} />} />
-	            <Scene key="text2" text="text2" component={(props) => <SwitcherPage {...props} text={currentSwitchPage} />} />
-	        </Scene>
-	        <Scene key="register" component={Register} title="Register"/>
-	        <Scene key="register2" component={Register} title="Register2" duration={1}/>
-	        <Scene key="home" component={Home} title="Replace" type="replace"/>
-	        <Scene key="launch" component={Launch} title="Launch" />
-	        <Scene key="login" direction="vertical"  >
-	            <Scene key="loginModal" direction="vertical" component={Login} title="Login"/>
-	            <Scene key="loginModal2" hideNavBar={true} component={Login2} title="Login2" panHandlers={null} duration={1}/>
-	            <Scene key="loginModal3" hideNavBar={true} component={Login3} title="Login3" panHandlers={null} duration={1}/>
-	        </Scene>
-	        <Scene key="tabbar" component={Home} initial={true}>
-	            <Scene key="main" tabs={true} >
-	                <Scene key="tab1" initial={true}  title="Home" icon={TabIcon} navigationBarStyle={styles.container} titleStyle={{color:"white"}}>
-	                    <Scene key="tab1_1" component={TabView} title="Dress" onRight={()=>alert("Right button")} rightTitle="Right" />
-	                    <Scene key="tab1_2" component={TabView} title="Tops" titleStyle={{color:"black"}}/>
-	                </Scene>
-	                <Scene key="tab2" title="Tab #2" icon={TabIcon}>
-	                    <Scene key="tab2_1" component={TabView} title="Tab #2_1" renderRightButton={()=><Right/>} />
-	                    <Scene key="tab2_2" component={TabView} title="Tab #2_2" hideBackImage onBack={()=>alert("Left button!")} backTitle="Left" duration={1} panHandlers={null}/>
-	                </Scene>
-	                <Scene key="tab3" component={TabView} title="Tab #3" icon={TabIcon}/>
-	                <Scene key="tab4" component={TabView} title="Tab #4" hideNavBar={false} icon={TabIcon}/>
-	                <Scene key="tab5" component={TabView} title="Tab #5" hideTabBar={false} hideNavBar={true} icon={TabIcon}/>
-	            </Scene>
-	        </Scene>
-	    </Scene>
-	    <Scene key="error" component={Error}/>
-  </Scene>
-</Router>
+  <Router key='appRouter' createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
+    <Scene key="root" navigationBarStyle={styles.container}>
+      <Scene key="welcome" component={LauchContainer} title="Welcome" hideNavBar={true} hideTabBar={true} />
+      <Scene key="drawer" component={DrawerContainer} title="drawer" hideNavBar={true} hideTabBar={true} >
+        <Scene key='home' component={HomeContainer} title="home" hideNavBar={true} hideTabBar={true} />
+      </Scene>
+
+    </Scene>
+  </Router>
 )
+
+
+// const scenes = Actions.create(
+// 	<Router key='appRouter' createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
+// 		<Scene key="modal" component={Modal}>
+//
+// 	    <Scene key="root" hideNavBar hideTabBar>
+// 	        <Scene key="echo" clone component={EchoView} getTitle={(navState) => navState.key} />
+// 	        <Scene key="switcher" component={Switch} selector={(props) => {
+// 	            return 'text1';
+// 	        }}>
+// 	            <Scene key="text1" text="text1" component={(props) => <SwitcherPage {...props} text={currentSwitchPage} />} />
+// 	            <Scene key="text2" text="text2" component={(props) => <SwitcherPage {...props} text={currentSwitchPage} />} />
+// 	        </Scene>
+// 	        <Scene key="register" component={Register} title="Register"/>
+// 	        <Scene key="register2" component={Register} title="Register2" duration={1}/>
+// 	        <Scene key="home" component={Home} title="Replace" type="replace"/>
+// 	        <Scene key="launch" component={Launch} title="Launch" />
+// 	        <Scene key="login" direction="vertical"  >
+// 	            <Scene key="loginModal" direction="vertical" component={Login} title="Login"/>
+// 	            <Scene key="loginModal2" hideNavBar={true} component={Login2} title="Login2" panHandlers={null} duration={1}/>
+// 	            <Scene key="loginModal3" hideNavBar={true} component={Login3} title="Login3" panHandlers={null} duration={1}/>
+// 	        </Scene>
+// 	        <Scene key="tabbar" component={Home} initial={true}>
+// 	            <Scene key="main" tabs={true} >
+// 	                <Scene key="tab1" initial={true}  title="Home" icon={TabIcon} navigationBarStyle={styles.container} titleStyle={{color:"white"}}>
+// 	                    <Scene key="tab1_1" component={TabView} title="Dress" onRight={()=>alert("Right button")} rightTitle="Right" />
+// 	                    <Scene key="tab1_2" component={TabView} title="Tops" titleStyle={{color:"black"}}/>
+// 	                </Scene>
+// 	                <Scene key="tab2" title="Tab #2" icon={TabIcon}>
+// 	                    <Scene key="tab2_1" component={TabView} title="Tab #2_1" renderRightButton={()=><Right/>} />
+// 	                    <Scene key="tab2_2" component={TabView} title="Tab #2_2" hideBackImage onBack={()=>alert("Left button!")} backTitle="Left" duration={1} panHandlers={null}/>
+// 	                </Scene>
+// 	                <Scene key="tab3" component={TabView} title="Tab #3" icon={TabIcon}/>
+// 	                <Scene key="tab4" component={TabView} title="Tab #4" hideNavBar={false} icon={TabIcon}/>
+// 	                <Scene key="tab5" component={TabView} title="Tab #5" hideTabBar={false} hideNavBar={true} icon={TabIcon}/>
+// 	            </Scene>
+// 	        </Scene>
+// 	    </Scene>
+// 	    <Scene key="error" component={Error}/>
+//   </Scene>
+// </Router>
+// )
 export default scenes

@@ -1,49 +1,36 @@
-import React, { PropTypes } from 'react';
-import {View,Text,} from 'react-native';
-import Drawer from 'react-native-drawer';
-import { DefaultRenderer, Actions } from 'react-native-router-flux';
+/* @flow */
 
-class LeftMenu extends React.Component {
-  render () {
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { decrement, increment } from '@store/modules/counter'
+import Container from '@components/Container'
+import Title from '@components/Title'
+import Counter from '@components/Counter'
+
+type Props = {
+  counter: number,
+  dispatch: (a: Function) => any,
+}
+
+class CounterContainer extends Component<void, Props, void> {
+  props: Props
+  render() {
+    const { counter, dispatch } = this.props
     return (
-      <View>
-        <Text>
-           this is left menu
-        </Text>
-      </View>
+      <Container>
+        <Title>hello world</Title>
+        <Counter
+          value={counter}
+          decrement={() => dispatch(decrement())}
+          increment={() => dispatch(increment())}
+        />
+      </Container>
     )
   }
 }
 
-const propTypes = {
-  navigationState: PropTypes.object,
-};
+const mapStateToProps = (state) => ({
+  counter: state.counter,
+})
 
-class NavigationDrawer extends React.Component {
-  render() {
-    const state = this.props.navigationState;
-    const children = state.children;
-    return (
-      <Drawer
-        ref="navigation"
-        type="displace"
-        onOpen={() => Actions.refresh({ key: state.key, open: true })}
-        onClose={() => Actions.refresh({ key: state.key, open: false })}
-        content={<LeftMenu />}
-        tapToClose
-        openDrawerOffset={0.2}
-        panCloseMask={0.2}
-        negotiatePan
-        tweenHandler={(ratio) => ({
-          main: { opacity: Math.max(0.54, 1 - ratio) },
-        })}
-      >
-        <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
-      </Drawer>
-    );
-  }
-}
-
-NavigationDrawer.propTypes = propTypes;
-
-export default NavigationDrawer;
+export default connect(mapStateToProps)(CounterContainer)
